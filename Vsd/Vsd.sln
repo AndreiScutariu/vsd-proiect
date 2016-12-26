@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vsd.Communication", "Vsd.Communication\Vsd.Communication.csproj", "{CF65DB54-905B-4B42-9506-15D58CA778C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vsd.Slave", "Vsd.Slave\Vsd.Slave.csproj", "{EE601DBD-096A-4898-9886-95CAE321735A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vsd.Slave.Leaf", "Vsd.Slave\Vsd.Slave.Leaf.csproj", "{EE601DBD-096A-4898-9886-95CAE321735A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vsd.Common", "Vsd.Common\Vsd.Common.csproj", "{CA4D8038-4A00-41AA-AA7B-D9E71B7E7547}"
 EndProject

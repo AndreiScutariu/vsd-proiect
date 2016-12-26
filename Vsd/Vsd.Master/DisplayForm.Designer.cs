@@ -33,7 +33,7 @@
 
             openGlControl.Dock = System.Windows.Forms.DockStyle.Fill;
             openGlControl.DrawFPS = true;
-            openGlControl.FrameRate = 25;
+            openGlControl.FrameRate = 15;
             openGlControl.Location = new System.Drawing.Point(0, 0);
             openGlControl.Name = "openGLControl";
             //openGlControl.RenderContextType = RenderContextType.FBO;
@@ -49,7 +49,7 @@
             Controls.Add(value: openGlControl);
 
             Name = "SharpGLForm";
-            Text = "Slave Form";
+            Text = "Master Form";
 
             ((System.ComponentModel.ISupportInitialize)(openGlControl)).EndInit();
 
