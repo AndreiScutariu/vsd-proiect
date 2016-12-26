@@ -1,10 +1,11 @@
-﻿namespace Vsd.Slave.Components
+﻿namespace Vsd.Slave.Leaf.Components
 {
     using System;
 
     using Vsd.Common;
     using Vsd.Communication;
-    using Vsd.Slave.Slaves;
+    using Vsd.Slave.Leaf.Slaves;
+    using Vsd.Slave.Leaf.Slaves.Utils;
 
     public class SendPixelsComponent
     {
@@ -30,10 +31,11 @@
 
         public void Send()
         {
-            var pixelToSend = new byte[pixelsReadOnlyContainer.Length + depthsReadOnlyContainer.Length];
+            var pixelToSend = new byte[4 + pixelsReadOnlyContainer.Length + depthsReadOnlyContainer.Length];
 
-            Buffer.BlockCopy(pixelsReadOnlyContainer, 0, pixelToSend, 0, pixelsReadOnlyContainer.Length);
-            Buffer.BlockCopy(depthsReadOnlyContainer, 0, pixelToSend, pixelsReadOnlyContainer.Length, depthsReadOnlyContainer.Length);
+            Buffer.BlockCopy(BitConverter.GetBytes(slaveSettings.SlaveId), 0, pixelToSend, 0, 4);
+            Buffer.BlockCopy(pixelsReadOnlyContainer, 0, pixelToSend, 4, pixelsReadOnlyContainer.Length);
+            Buffer.BlockCopy(depthsReadOnlyContainer, 0, pixelToSend, 4 + pixelsReadOnlyContainer.Length, depthsReadOnlyContainer.Length);
 
             byte[] commpressedPixels = pixelToSend.Compress();
 

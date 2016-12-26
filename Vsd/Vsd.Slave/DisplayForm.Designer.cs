@@ -1,10 +1,11 @@
-﻿namespace Vsd.Slave
+﻿namespace Vsd.Slave.Leaf
 {
     using System;
 
     using SharpGL;
 
     using Vsd.Common;
+    using Vsd.Slave.Leaf.Slaves.Utils;
 
     partial class DisplayForm
     {
@@ -21,7 +22,7 @@
             base.Dispose(disposing);
         }
 
-        private void InitializeComponent()
+        private void InitializeComponent(Settings settings)
         {
             components = new System.ComponentModel.Container();
 
@@ -33,10 +34,10 @@
 
             openGlControl.Dock = System.Windows.Forms.DockStyle.Fill;
             openGlControl.DrawFPS = true;
-            openGlControl.FrameRate = 40;
+            openGlControl.FrameRate = 20;
             openGlControl.Location = new System.Drawing.Point(0, 0);
-            openGlControl.Name = "openGLControl";
-            openGlControl.RenderContextType = RenderContextType.FBO;
+            openGlControl.Name = "openGLControl" + settings.SlaveId;
+            //openGlControl.RenderContextType = RenderContextType.FBO;
             openGlControl.Size = new System.Drawing.Size(Resources.X, Resources.Y);
             openGlControl.TabIndex = 0;
 
@@ -48,8 +49,8 @@
             ClientSize = new System.Drawing.Size(Resources.X, Resources.Y);
             Controls.Add(value: openGlControl);
 
-            Name = "SharpGLForm";
-            Text = "Slave Form";
+            Name = "SharpGLForm" + settings.SlaveId;
+            Text = "Slave Form " + settings.SlaveId;
 
             ((System.ComponentModel.ISupportInitialize)(openGlControl)).EndInit();
 

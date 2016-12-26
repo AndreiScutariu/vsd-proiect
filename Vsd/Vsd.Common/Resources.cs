@@ -10,6 +10,10 @@
 
         public static string MasterMulticastIp = "127.0.0.1";
 
+        public static int NodeMulticastPort = 45679;
+
+        public static string NodeMulticastIp = "127.0.0.1";
+
         public static int PixelsSize => X * Y;
 
         public static int RgbPixelsSize => X * Y * 3;

@@ -1,8 +1,10 @@
-namespace Vsd.Slave.Slaves
+namespace Vsd.Slave.Leaf.Slaves
 {
     using SharpGL;
 
-    public class SlaveOne : ISlave
+    using Vsd.Slave.Leaf.Slaves.Utils;
+
+    public class CircularSphere : ISlave
     {
         public Settings Settings { get; set; }
 
@@ -13,10 +15,11 @@ namespace Vsd.Slave.Slaves
             gl.LoadIdentity();
             gl.Scale(0.1, 0.1, 0.1);
 
-            gl.Color(0.0f, 1.0f, 0.0f);
-            gl.Rotate(rotation, 0.0f, 1.0f, 0.0f);
+            gl.Color(Settings.DrawColor);
+
+            gl.Rotate(rotation, Settings.DrawRotation);
             gl.Translate(0, 1, 30);
-            gl.Sphere(quad, 12, 20, 20);
+            gl.Sphere(quad, 12, 200, 200);
         }
     }
 }

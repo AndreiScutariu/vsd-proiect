@@ -7,8 +7,8 @@
     <ProjectGuid>{EE601DBD-096A-4898-9886-95CAE321735A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Vsd.Slave</RootNamespace>
-    <AssemblyName>Vsd.Slave</AssemblyName>
+    <RootNamespace>Vsd.Slave.Leaf</RootNamespace>
+    <AssemblyName>Vsd.Slave.Leaf</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -66,9 +66,12 @@
       <DependentUpon>DisplayForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\SendPixelsComponent.cs" />
+    <Compile Include="SlaveFactory.cs" />
     <Compile Include="Slaves\ISlave.cs" />
-    <Compile Include="Slaves\Settings.cs" />
-    <Compile Include="Slaves\SlaveOne.cs" />
+    <Compile Include="Slaves\Utils\Settings.cs" />
+    <Compile Include="Slaves\CircularSphere.cs" />
+    <Compile Include="Slaves\StaticSphere.cs" />
+    <Compile Include="Slaves\Utils\Extensions.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -79,6 +82,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

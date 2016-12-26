@@ -1,4 +1,4 @@
-﻿namespace Vsd.Slave
+﻿namespace Vsd.Slave.Leaf
 {
     using System;
     using System.Threading.Tasks;
@@ -7,8 +7,8 @@
     using SharpGL;
 
     using Vsd.Common;
-    using Vsd.Slave.Components;
-    using Vsd.Slave.Slaves;
+    using Vsd.Slave.Leaf.Components;
+    using Vsd.Slave.Leaf.Slaves;
 
     public partial class DisplayForm : Form
     {
@@ -16,13 +16,11 @@
 
         private double rotation;
 
-        private int counter;
-
         public DisplayForm(ISlave slave)
         {
             this.slave = slave;
 
-            InitializeComponent();
+            InitializeComponent(slave.Settings);
 
             PixelsBuffer = new byte[Resources.RgbPixelsSize];
             DepthsBuffer = new byte[Resources.DepthPixelsSize];
@@ -44,14 +42,7 @@
             OpenGL.ReadPixels(0, 0, Resources.X, Resources.Y, OpenGL.GL_RGB, OpenGL.GL_UNSIGNED_BYTE, PixelsBuffer);
             OpenGL.ReadPixels(0, 0, Resources.X, Resources.Y, OpenGL.GL_DEPTH_COMPONENT, OpenGL.GL_FLOAT, DepthsBuffer);
 
-            rotation += 2.0f;
-
-            //if (counter++ != 10)
-            //{
-            //    return;
-            //}
-
-            //counter = 0;
+            rotation += 4.0f;
             Task.Run(() => SendPixelsComponent.Send());
         }
 

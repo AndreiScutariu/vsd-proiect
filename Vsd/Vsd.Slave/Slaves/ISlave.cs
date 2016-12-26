@@ -1,6 +1,8 @@
-﻿namespace Vsd.Slave.Slaves
+﻿namespace Vsd.Slave.Leaf.Slaves
 {
     using SharpGL;
+
+    using Vsd.Slave.Leaf.Slaves.Utils;
 
     public interface ISlave
     {

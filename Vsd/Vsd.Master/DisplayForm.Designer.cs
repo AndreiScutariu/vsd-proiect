@@ -36,7 +36,7 @@
             openGlControl.FrameRate = 25;
             openGlControl.Location = new System.Drawing.Point(0, 0);
             openGlControl.Name = "openGLControl";
-            //openGlControl.RenderContextType = RenderContextType.FBO;
+            openGlControl.RenderContextType = RenderContextType.FBO;
             openGlControl.Size = new System.Drawing.Size(Resources.X, Resources.Y);
             openGlControl.TabIndex = 0;
 
