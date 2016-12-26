@@ -6,6 +6,10 @@
 
         public const int Y = 400;
 
+        public static int MasterMulticastPort = 45678;
+
+        public static string MasterMulticastIp = "127.0.0.1";
+
         public static int PixelsSize => X * Y;
 
         public static int RgbPixelsSize => X * Y * 3;

@@ -1,4 +1,4 @@
-﻿namespace Vsd.Slave
+﻿namespace Vsd.Master
 {
     using System;
 
@@ -33,10 +33,10 @@
 
             openGlControl.Dock = System.Windows.Forms.DockStyle.Fill;
             openGlControl.DrawFPS = true;
-            openGlControl.FrameRate = 40;
+            openGlControl.FrameRate = 25;
             openGlControl.Location = new System.Drawing.Point(0, 0);
             openGlControl.Name = "openGLControl";
-            openGlControl.RenderContextType = RenderContextType.FBO;
+            //openGlControl.RenderContextType = RenderContextType.FBO;
             openGlControl.Size = new System.Drawing.Size(Resources.X, Resources.Y);
             openGlControl.TabIndex = 0;
 

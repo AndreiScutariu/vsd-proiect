@@ -15,7 +15,7 @@ namespace Vsd.Communication
             return connection;
         }
 
-        private void Send(byte[] datagram)
+        public void Send(byte[] datagram)
         {
             Client.Send(datagram, datagram.Length);
         }

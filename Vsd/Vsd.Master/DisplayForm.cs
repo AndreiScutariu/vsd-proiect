@@ -1,58 +1,33 @@
-﻿namespace Vsd.Slave
+﻿namespace Vsd.Master
 {
     using System;
-    using System.Threading.Tasks;
     using System.Windows.Forms;
 
     using SharpGL;
 
     using Vsd.Common;
-    using Vsd.Slave.Components;
-    using Vsd.Slave.Slaves;
 
     public partial class DisplayForm : Form
     {
-        private readonly ISlave slave;
-
-        private double rotation;
-
-        private int counter;
-
-        public DisplayForm(ISlave slave)
+        public DisplayForm()
         {
-            this.slave = slave;
-
             InitializeComponent();
 
             PixelsBuffer = new byte[Resources.RgbPixelsSize];
-            DepthsBuffer = new byte[Resources.DepthPixelsSize];
         }
 
         public byte[] PixelsBuffer { get; set; }
-
-        public byte[] DepthsBuffer { get; set; }
-
-        public SendPixelsComponent SendPixelsComponent { get; set; }
 
         // ReSharper disable once InconsistentNaming
         private OpenGL OpenGL => openGlControl.OpenGL;
 
         private void OpenGlControlOpenGlDraw(object sender, RenderEventArgs e)
         {
-            slave.Draw(OpenGL, rotation);
+            OpenGL.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
+            OpenGL.LoadIdentity();
+            OpenGL.Scale(0.1, 0.1, 0.1);
 
-            OpenGL.ReadPixels(0, 0, Resources.X, Resources.Y, OpenGL.GL_RGB, OpenGL.GL_UNSIGNED_BYTE, PixelsBuffer);
-            OpenGL.ReadPixels(0, 0, Resources.X, Resources.Y, OpenGL.GL_DEPTH_COMPONENT, OpenGL.GL_FLOAT, DepthsBuffer);
-
-            rotation += 2.0f;
-
-            //if (counter++ != 10)
-            //{
-            //    return;
-            //}
-
-            //counter = 0;
-            Task.Run(() => SendPixelsComponent.Send());
+            OpenGL.DrawPixels(Resources.X, Resources.Y, OpenGL.GL_RGB, PixelsBuffer);
         }
 
         private void OpenGlControlOpenGlInitialized(object sender, EventArgs e)
