@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Concurrent;
+    using System.Runtime.InteropServices;
     using System.Threading.Tasks;
 
     using Vsd.Slave.Node.Components;
@@ -14,18 +15,20 @@
         {
             string[] stringParam = args[0].Split('-');
 
-            var leftPort = int.Parse(stringParam[0]);
-            var rightPort = int.Parse(stringParam[1]);
-            var parrentPort = int.Parse(stringParam[2]);
+            var id = int.Parse(stringParam[0]);
+            var leftPort = int.Parse(stringParam[1]);
+            var rightPort = int.Parse(stringParam[2]);
+            var parrentPort = int.Parse(stringParam[3]);
 
             Console.WriteLine($"Slave node oppened on port {leftPort} - {rightPort}!");
+            Console.Title = "Slave Node " + parrentPort % 10;
 
             receivedBytesMatrix = new ConcurrentDictionary<int, byte[]>();
 
             var leftReceiver = new ReceivePixelsComponent(receivedBytesMatrix, leftPort);
             var rightReceiver = new ReceivePixelsComponent(receivedBytesMatrix, rightPort);
 
-            var aggregateSender = new AggregatePixelsComponent(receivedBytesMatrix, parrentPort);
+            var aggregateSender = new AggregatePixelsComponent(id, receivedBytesMatrix, parrentPort);
 
             Task.Run(() => leftReceiver.Start());
             Task.Run(() => rightReceiver.Start());

@@ -33,7 +33,7 @@
 
             openGlControl.Dock = System.Windows.Forms.DockStyle.Fill;
             openGlControl.DrawFPS = true;
-            openGlControl.FrameRate = 5;
+            openGlControl.FrameRate = 10;
             openGlControl.Location = new System.Drawing.Point(0, 0);
             openGlControl.Name = "openGLControl";
             openGlControl.RenderContextType = RenderContextType.FBO;

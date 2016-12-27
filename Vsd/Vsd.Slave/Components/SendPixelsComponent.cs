@@ -33,7 +33,7 @@
         {
             var pixelToSend = new byte[4 + pixelsReadOnlyContainer.Length + depthsReadOnlyContainer.Length];
 
-            Buffer.BlockCopy(BitConverter.GetBytes(slaveSettings.SlaveId), 0, pixelToSend, 0, 4);
+            Buffer.BlockCopy(BitConverter.GetBytes(slaveSettings.SlaveKey), 0, pixelToSend, 0, 4);
             Buffer.BlockCopy(pixelsReadOnlyContainer, 0, pixelToSend, 4, pixelsReadOnlyContainer.Length);
             Buffer.BlockCopy(depthsReadOnlyContainer, 0, pixelToSend, 4 + pixelsReadOnlyContainer.Length, depthsReadOnlyContainer.Length);
 

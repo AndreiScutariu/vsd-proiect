@@ -34,9 +34,9 @@
 
             openGlControl.Dock = System.Windows.Forms.DockStyle.Fill;
             openGlControl.DrawFPS = true;
-            openGlControl.FrameRate = 10;
+            openGlControl.FrameRate = 5;
             openGlControl.Location = new System.Drawing.Point(0, 0);
-            openGlControl.Name = "openGLControl" + settings.SlaveId;
+            openGlControl.Name = "openGLControl" + settings.InternalId;
             openGlControl.RenderContextType = RenderContextType.FBO;
             openGlControl.Size = new System.Drawing.Size(Resources.X, Resources.Y);
             openGlControl.TabIndex = 0;
@@ -49,8 +49,8 @@
             ClientSize = new System.Drawing.Size(Resources.X, Resources.Y);
             Controls.Add(value: openGlControl);
 
-            Name = "SharpGLForm" + settings.SlaveId;
-            Text = "Slave Form " + settings.SlaveId;
+            Name = "SharpGLForm" + settings.InternalId;
+            Text = "Slave Form " + settings.InternalId;
 
             ((System.ComponentModel.ISupportInitialize)(openGlControl)).EndInit();
 

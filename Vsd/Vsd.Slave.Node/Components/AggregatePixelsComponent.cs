@@ -12,6 +12,8 @@
 
         private const byte RightKey = 2;
 
+        private readonly int slaveNodeId;
+
         private readonly ConcurrentDictionary<int, byte[]> pixelContainer;
 
         private readonly UdpUser connectionToParrent;
@@ -24,8 +26,12 @@
 
         private float[] rightDepths = new float[Resources.Ps];
 
-        public AggregatePixelsComponent(ConcurrentDictionary<int, byte[]> pixelContainer, int parrentPort)
+        public AggregatePixelsComponent(
+            int slaveNodeId,
+            ConcurrentDictionary<int, byte[]> pixelContainer,
+            int parrentPort)
         {
+            this.slaveNodeId = slaveNodeId;
             this.pixelContainer = pixelContainer;
             connectionToParrent = UdpUser.ConnectTo(Resources.LocalIp, parrentPort);
         }
@@ -36,42 +42,43 @@
             {
                 try
                 {
-                    Buffer.BlockCopy(pixelContainer[LeftKey], Resources.Rps, leftDepthsBytes, 0, Resources.Dps);
-                    Buffer.BlockCopy(pixelContainer[RightKey], Resources.Rps, rightDepthsBytes, 0, Resources.Dps);
+                    #region copy depths
 
+                    Buffer.BlockCopy(pixelContainer[LeftKey], Resources.Rps, leftDepthsBytes, 0, Resources.Dps);
                     leftDepths = leftDepthsBytes.ConvertToFloatArray();
+
+                    Buffer.BlockCopy(pixelContainer[RightKey], Resources.Rps, rightDepthsBytes, 0, Resources.Dps);
                     rightDepths = rightDepthsBytes.ConvertToFloatArray();
 
-                    //Parallel.For(
-                    //    0,
-                    //    Resources.Ps,
-                    //    i =>
-                    //        {
-                    //            byte[] pixelRef = leftDepths[i] > rightDepths[i]
-                    //                                  ? pixelContainer[LeftKey]
-                    //                                  : pixelContainer[RightKey];
-                    //        });
+                    #endregion copy depths
 
-                    var pixels = new byte[Resources.Rps];
-                    var idx = 0;
-                    //Buffer.BlockCopy(pixelContainer[LeftKey], 0, pixels, 0, Resources.Rps);
+                    var pixels = new byte[4 + Resources.Rps + Resources.Dps];
+
+                    Buffer.BlockCopy(BitConverter.GetBytes(slaveNodeId), 0, pixels, 0, 4);
+
+                    var pIdx = 4;
+                    var dIdx = 4 + Resources.Rps;
+
                     for (var i = 0; i < Resources.Ps; i++)
                     {
-                        byte[] pixelRef = leftDepths[i] > rightDepths[i]
+                        byte[] pixelRef = leftDepths[i] < rightDepths[i]
                                               ? pixelContainer[LeftKey]
                                               : pixelContainer[RightKey];
 
-                        pixels[idx] = pixelRef[idx++];
-                        pixels[idx] = pixelRef[idx++];
-                        pixels[idx] = pixelRef[idx++];
+                        pixels[pIdx] = pixelRef[pIdx++ - 4];
+                        pixels[pIdx] = pixelRef[pIdx++ - 4];
+                        pixels[pIdx] = pixelRef[pIdx++ - 4];
+
+                        pixels[dIdx] = pixelRef[dIdx++ - 4];
+                        pixels[dIdx] = pixelRef[dIdx++ - 4];
+                        pixels[dIdx] = pixelRef[dIdx++ - 4];
+                        pixels[dIdx] = pixelRef[dIdx++ - 4];
                     }
 
-                    
                     connectionToParrent.Send(pixels.Compress());
                 }
-                catch (Exception ex)
+                catch
                 {
-                    Console.WriteLine(ex.Message);
                 }
             }
         }

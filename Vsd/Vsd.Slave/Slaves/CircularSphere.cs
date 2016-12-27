@@ -18,7 +18,7 @@ namespace Vsd.Slave.Leaf.Slaves
             gl.Color(Settings.DrawColor);
 
             gl.Rotate(rotation, Settings.DrawRotation);
-            gl.Translate(0, 1, 30);
+            gl.Translate(0, 1, Settings.InternalId * 20);
             gl.Sphere(quad, 12, 200, 200);
         }
     }
