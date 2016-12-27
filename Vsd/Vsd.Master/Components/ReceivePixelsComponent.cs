@@ -23,12 +23,19 @@ namespace Vsd.Master.Components
             while (true)
             {
                 byte[] receivedCompressed = await udpListener.ReceiveBytes();
-
                 byte[] received = receivedCompressed.Decompress();
 
-                Buffer.BlockCopy(received, 0, pixelsContainer, 0, pixelsContainer.Length);
+                //var slaveIdBytes = new byte[4];
+                var rgbPixelsBytes = new byte[Resources.Rps];
+                //var depthPixelsBytes = new byte[Resources.DepthPixelsSize];
 
-                //Thread.Sleep(TimeSpan.FromMilliseconds(5));
+                //Buffer.BlockCopy(received, 0, slaveIdBytes, 0, 4);
+                Buffer.BlockCopy(received, 0, rgbPixelsBytes, 0, Resources.Rps);
+                //Buffer.BlockCopy(received, 4 + Resources.RgbPixelsSize, depthPixelsBytes, 0, Resources.DepthPixelsSize);
+
+                Buffer.BlockCopy(rgbPixelsBytes, 0, pixelsContainer, 0, pixelsContainer.Length);
+
+                Thread.Sleep(10);
             }
         }
     }

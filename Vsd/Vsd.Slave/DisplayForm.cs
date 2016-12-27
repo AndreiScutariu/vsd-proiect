@@ -1,6 +1,7 @@
 ﻿namespace Vsd.Slave.Leaf
 {
     using System;
+    using System.Threading;
     using System.Threading.Tasks;
     using System.Windows.Forms;
 
@@ -14,6 +15,8 @@
     {
         private readonly ISlave slave;
 
+        //private int contor;
+
         private double rotation;
 
         public DisplayForm(ISlave slave)
@@ -22,8 +25,8 @@
 
             InitializeComponent(slave.Settings);
 
-            PixelsBuffer = new byte[Resources.RgbPixelsSize];
-            DepthsBuffer = new byte[Resources.DepthPixelsSize];
+            PixelsBuffer = new byte[Resources.Rps];
+            DepthsBuffer = new byte[Resources.Dps];
         }
 
         public byte[] PixelsBuffer { get; set; }
@@ -38,12 +41,20 @@
         private void OpenGlControlOpenGlDraw(object sender, RenderEventArgs e)
         {
             slave.Draw(OpenGL, rotation);
+            rotation += 2.0f;
 
             OpenGL.ReadPixels(0, 0, Resources.X, Resources.Y, OpenGL.GL_RGB, OpenGL.GL_UNSIGNED_BYTE, PixelsBuffer);
             OpenGL.ReadPixels(0, 0, Resources.X, Resources.Y, OpenGL.GL_DEPTH_COMPONENT, OpenGL.GL_FLOAT, DepthsBuffer);
 
-            rotation += 4.0f;
-            Task.Run(() => SendPixelsComponent.Send());
+            //if (contor++ < 2)
+            //{
+            //    return;
+            //}
+
+            //contor = 0;
+
+            SendPixelsComponent.Send();
+            Thread.Sleep(TimeSpan.FromMilliseconds(10));
         }
 
         private void OpenGlControlOpenGlInitialized(object sender, EventArgs e)

@@ -34,10 +34,10 @@
 
             openGlControl.Dock = System.Windows.Forms.DockStyle.Fill;
             openGlControl.DrawFPS = true;
-            openGlControl.FrameRate = 20;
+            openGlControl.FrameRate = 10;
             openGlControl.Location = new System.Drawing.Point(0, 0);
             openGlControl.Name = "openGLControl" + settings.SlaveId;
-            //openGlControl.RenderContextType = RenderContextType.FBO;
+            openGlControl.RenderContextType = RenderContextType.FBO;
             openGlControl.Size = new System.Drawing.Size(Resources.X, Resources.Y);
             openGlControl.TabIndex = 0;
 

@@ -1,6 +1,7 @@
 ﻿namespace Vsd.Master
 {
     using System;
+    using System.Threading;
     using System.Windows.Forms;
 
     using SharpGL;
@@ -13,7 +14,7 @@
         {
             InitializeComponent();
 
-            PixelsBuffer = new byte[Resources.RgbPixelsSize];
+            PixelsBuffer = new byte[Resources.Rps];
         }
 
         public byte[] PixelsBuffer { get; set; }

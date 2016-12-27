@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vsd.Master", "Vsd.Master\Vs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vsd.Slave.Leaf", "Vsd.Slave\Vsd.Slave.Leaf.csproj", "{EE601DBD-096A-4898-9886-95CAE321735A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vsd.Slave.Node", "Vsd.Slave.Node\Vsd.Slave.Node.csproj", "{57064C98-BC3F-463E-91AF-B15EE8286B8F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{EE601DBD-096A-4898-9886-95CAE321735A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE601DBD-096A-4898-9886-95CAE321735A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE601DBD-096A-4898-9886-95CAE321735A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57064C98-BC3F-463E-91AF-B15EE8286B8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57064C98-BC3F-463E-91AF-B15EE8286B8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57064C98-BC3F-463E-91AF-B15EE8286B8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57064C98-BC3F-463E-91AF-B15EE8286B8F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

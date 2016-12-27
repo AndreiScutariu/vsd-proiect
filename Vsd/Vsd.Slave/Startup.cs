@@ -12,9 +12,12 @@
     internal static class Startup
     {
         [STAThread]
-        private static void Main(string[] argsParam)
+        private static void Main(string[] args)
         {
-            var stringParam = argsParam[0];
+            string[] argsParam = args[0].Split('-');
+
+            var parrentPort = int.Parse(argsParam[0]);
+            var stringParam = argsParam[1];
             
             var slaveId = int.Parse(stringParam[0].ToString());
             var drawType = int.Parse(stringParam[1].ToString());
@@ -28,7 +31,7 @@
             var slave = SlaveFactory.GetSlave(settings);
             var displayForm = new DisplayForm(slave);
 
-            var udpConnection = UdpUser.ConnectTo(Resources.MasterMulticastIp, Resources.MasterMulticastPort);
+            var udpConnection = UdpUser.ConnectTo(Resources.LocalIp, parrentPort);
 
             var sendPixelsComponent = new SendPixelsComponent(
                 udpConnection,
