@@ -1,6 +1,7 @@
 ﻿namespace Vsd.Slave.Leaf.Components
 {
     using System;
+    using System.Threading;
 
     using Vsd.Common;
     using Vsd.Communication;
@@ -40,6 +41,8 @@
             byte[] commpressedPixels = pixelToSend.Compress();
 
             udpUser.Send(commpressedPixels);
+
+            Thread.Sleep(TimeSpan.FromMilliseconds(100));
         }
     }
 }

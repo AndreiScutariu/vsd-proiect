@@ -3,6 +3,7 @@ namespace Vsd.Slave.Node.Components
     using System;
     using System.Collections.Concurrent;
     using System.Net;
+    using System.Threading;
 
     using Vsd.Common;
     using Vsd.Communication;
@@ -12,6 +13,10 @@ namespace Vsd.Slave.Node.Components
         private readonly ConcurrentDictionary<int, byte[]> pixelContainer;
 
         private readonly UdpListener listener;
+
+        private byte[] receivedCompressed;
+
+        private byte[] received;
 
         public ReceivePixelsComponent(ConcurrentDictionary<int, byte[]> pixelContainer, int receivePort)
         {
@@ -23,24 +28,21 @@ namespace Vsd.Slave.Node.Components
         {
             while (true)
             {
-                byte[] receivedCompressed = await listener.ReceiveBytes();
-                byte[] received = receivedCompressed.Decompress();
+                receivedCompressed = await listener.ReceiveBytes();
+                received = receivedCompressed.Decompress();
 
-                var receivedPixels = new byte[received.Length - 4];
-                Buffer.BlockCopy(received, 4, receivedPixels, 0, received.Length - 4);
-
-                var slaveIdBytes = new byte[4];
-                Buffer.BlockCopy(received, 0, slaveIdBytes, 0, 4);
-                var slaveId = BitConverter.ToInt32(slaveIdBytes, 0);
+                var slaveId = BitConverter.ToInt32(received, 0);
 
                 if (pixelContainer.ContainsKey(slaveId))
                 {
-                    pixelContainer[slaveId] = receivedPixels;
+                    pixelContainer[slaveId] = received;
                 }
                 else
                 {
                     pixelContainer.TryAdd(slaveId, received);
                 }
+
+                Thread.Sleep(10);
             }
         }
 

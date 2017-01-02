@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Concurrent;
+    using System.Threading;
 
     using Vsd.Common;
     using Vsd.Communication;
@@ -21,6 +22,8 @@
         private readonly byte[] leftDepthsBytes = new byte[Resources.Dps];
 
         private readonly byte[] rightDepthsBytes = new byte[Resources.Dps];
+
+        private readonly byte[] pixelsToSend = new byte[4 + Resources.Rps + Resources.Dps];
 
         private float[] leftDepths = new float[Resources.Ps];
 
@@ -52,9 +55,7 @@
 
                     #endregion copy depths
 
-                    var pixels = new byte[4 + Resources.Rps + Resources.Dps];
-
-                    Buffer.BlockCopy(BitConverter.GetBytes(slaveNodeId), 0, pixels, 0, 4);
+                    Buffer.BlockCopy(BitConverter.GetBytes(slaveNodeId), 0, pixelsToSend, 0, 4);
 
                     var pIdx = 4;
                     var dIdx = 4 + Resources.Rps;
@@ -65,17 +66,19 @@
                                               ? pixelContainer[LeftKey]
                                               : pixelContainer[RightKey];
 
-                        pixels[pIdx] = pixelRef[pIdx++ - 4];
-                        pixels[pIdx] = pixelRef[pIdx++ - 4];
-                        pixels[pIdx] = pixelRef[pIdx++ - 4];
+                        pixelsToSend[pIdx] = pixelRef[pIdx++];
+                        pixelsToSend[pIdx] = pixelRef[pIdx++];
+                        pixelsToSend[pIdx] = pixelRef[pIdx++];
 
-                        pixels[dIdx] = pixelRef[dIdx++ - 4];
-                        pixels[dIdx] = pixelRef[dIdx++ - 4];
-                        pixels[dIdx] = pixelRef[dIdx++ - 4];
-                        pixels[dIdx] = pixelRef[dIdx++ - 4];
+                        pixelsToSend[dIdx] = pixelRef[dIdx++];
+                        pixelsToSend[dIdx] = pixelRef[dIdx++];
+                        pixelsToSend[dIdx] = pixelRef[dIdx++];
+                        pixelsToSend[dIdx] = pixelRef[dIdx++];
                     }
 
-                    connectionToParrent.Send(pixels.Compress());
+                    connectionToParrent.Send(pixelsToSend.Compress());
+
+                    Thread.Sleep(10);
                 }
                 catch
                 {
