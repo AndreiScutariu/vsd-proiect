@@ -41,8 +41,6 @@
             byte[] commpressedPixels = pixelToSend.Compress();
 
             udpUser.Send(commpressedPixels);
-
-            Thread.Sleep(TimeSpan.FromMilliseconds(100));
         }
     }
 }

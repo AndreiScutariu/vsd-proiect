@@ -77,8 +77,6 @@
                     }
 
                     connectionToParrent.Send(pixelsToSend.Compress());
-
-                    Thread.Sleep(10);
                 }
                 catch
                 {

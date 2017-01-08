@@ -41,8 +41,6 @@ namespace Vsd.Slave.Node.Components
                 {
                     pixelContainer.TryAdd(slaveId, received);
                 }
-
-                Thread.Sleep(10);
             }
         }
 

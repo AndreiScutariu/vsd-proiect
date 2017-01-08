@@ -25,7 +25,6 @@ namespace Vsd.Master.Components
                 byte[] receivedCompressed = await udpListener.ReceiveBytes();
                 byte[] received = receivedCompressed.Decompress();
                 Buffer.BlockCopy(received, 4, pixelsContainer, 0, Resources.Rps);
-                Thread.Sleep(10);
             }
         }
     }

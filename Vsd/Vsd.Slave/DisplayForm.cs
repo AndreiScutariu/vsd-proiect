@@ -54,7 +54,6 @@
             //contor = 0;
 
             SendPixelsComponent.Send();
-            Thread.Sleep(TimeSpan.FromMilliseconds(10));
         }
 
         private void OpenGlControlOpenGlInitialized(object sender, EventArgs e)
